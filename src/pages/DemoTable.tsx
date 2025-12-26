@@ -1,33 +1,66 @@
+import { useEffect, useState } from "react";
 import DataTable from "../components/datatable/DataTable";
-
-
 type User = {
-  name: string;
-  email: string;
-  role: string;
+    id: number;
+    name: string;
+    email: string;
+    role: string;
 };
 
 const columns: { key: keyof User; label: string }[] = [
-  { key: "name", label: "Name" },
-  { key: "email", label: "Email" },
-  { key: "role", label: "Role" },
+    { key: "name", label: "Name" },
+    { key: "email", label: "Email" },
+    { key: "role", label: "Role" },
 ];
-
-const data: User[] = [
-  { name: "Alice", email: "alice@example.com", role: "Admin" },
-  { name: "Bob", email: "bob@example.com", role: "User" },
-  { name: "Charlie", email: "charlie@example.com", role: "Guest" },
-];
-
 export default function DemoTable() {
-  return (
+    const [users, setUsers] = useState<User[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch(
+                    "https://jsonplaceholder.typicode.com/users"
+                );
+                const data = await res.json();
+
+                const mappedUsers: User[] = data.map((item: any) => ({
+                    id: item.id,
+                    name: item.name,
+                    email: item.email,
+                    role: item.username, // dummy role
+                }));
+
+                setUsers(mappedUsers);
+            } catch {
+                setError("Failed to load data");
+            }
+        finally {
+            setLoading(false);
+        }
+    };
+    fetchUsers();
+}, []);
+
+return (
     <div style={{ padding: 20 }}>
-      <h2>Users</h2>
-      <DataTable<User>
-        columns={columns}
-        data={data}
-        onRowSelect={(row) => console.log(row)}
-      />
+        <h2>Users Data</h2>
+
+        {loading ? (
+            <p>Loading...</p>
+        ) : (
+            <DataTable<User>
+                columns={columns}
+                data={users}
+                onRowSelect={(row) => console.log("Selected:", row)}
+            />
+        )}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
     </div>
-  );
+);
 }
+
+
