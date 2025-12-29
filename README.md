@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Test_task
-=======
 # Reusable Data Table Component (React + TypeScript)
 
 ## Overview
@@ -57,4 +54,3 @@ npm install
 
 npm run dev
 
->>>>>>> f03625cad5c7b39850a4189f7149a084d34b6c5d
