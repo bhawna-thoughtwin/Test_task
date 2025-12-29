@@ -6,7 +6,12 @@ type User = {
     email: string;
     role: string;
 };
-
+type ApiUser = {
+  id: number;
+  name: string;
+  email: string;
+  username: string;
+};
 const columns: { key: keyof User; label: string }[] = [
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },
@@ -24,9 +29,9 @@ export default function DemoTable() {
                 const res = await fetch(
                     "https://jsonplaceholder.typicode.com/users"
                 );
-                const data = await res.json();
+                const data: ApiUser[] = await res.json();
 
-                const mappedUsers: User[] = data.map((item: any) => ({
+                const mappedUsers: User[] = data.map((item) => ({
                     id: item.id,
                     name: item.name,
                     email: item.email,

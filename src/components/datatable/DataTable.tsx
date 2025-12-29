@@ -10,15 +10,10 @@ function DataTable<T>({
     onRowSelect,
 }: DataTableProps<T>) {
     const [selectedRow, setSelectedRow] = useState<T | null>(null);
-
     const [sortKey, setSortKey] = useState<keyof T | null>(null);
     const [sortDirection, setSortDirection] =
         useState<SortDirection>("asc");
     const [searchText, setSearchText] = useState("");
-
-
-
-
     const handleSort = (key: keyof T) => {
         if (sortKey === key) {
             setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -42,9 +37,7 @@ function DataTable<T>({
 
     const filteredData = useMemo(() => {
         if (!searchText) return sortedData;
-
         const lowerSearch = searchText.toLowerCase();
-
         return sortedData.filter((row) =>
             columns.some((col) => {
                 const value = row[col.key];
@@ -55,10 +48,8 @@ function DataTable<T>({
 
     const highlightText = (text: string, search: string) => {
         if (!search) return text;
-
         const regex = new RegExp(`(${search})`, "gi");
         const parts = text.split(regex);
-
         return parts.map((part, index) =>
             part.toLowerCase() === search.toLowerCase() ? (
                 <mark key={index}>{part}</mark>
@@ -136,5 +127,4 @@ function DataTable<T>({
         </div>
     );
 }
-
 export default DataTable;

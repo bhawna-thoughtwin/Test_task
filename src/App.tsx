@@ -5,8 +5,6 @@ import './App.css'
 import DemoTable from './pages/DemoTable'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
     <DemoTable/>
