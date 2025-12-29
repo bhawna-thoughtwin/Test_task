@@ -1,0 +1,22 @@
+.navbar {
+  background-color: rgb(207, 207, 198);
+  display: flex;               
+  align-items: center;        
+  height: 60px;
+  margin-bottom: 10px;
+  gap: 24px;                  
+  padding: 0 20px;
+}
+
+.searchInput {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.userCount {
+  margin-left: auto;           /* push to right */
+  font-weight: 500;
+}

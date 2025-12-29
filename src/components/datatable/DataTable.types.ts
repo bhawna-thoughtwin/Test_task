@@ -6,5 +6,7 @@ export type Column<T> = {
 export interface DataTableProps<T> {
   columns: Column<T>[];
   data: T[];
+  searchText: string;
   onRowSelect?: (row: T | null) => void;
+  sortDirection: "asc" | "desc";
 }
