@@ -1,19 +1,16 @@
 import { useMemo, useState } from "react";
 import styles from "./DataTable.module.css";
 import type { DataTableProps } from "./DataTable.types";
-
-type SortDirection = "asc" | "desc";
-
 function DataTable<T>({
     columns,
     data,
     onRowSelect,
+    searchText,
+    sortDirection: propSortDirection,
 }: DataTableProps<T>) {
     const [selectedRow, setSelectedRow] = useState<T | null>(null);
     const [sortKey, setSortKey] = useState<keyof T | null>(null);
-    const [sortDirection, setSortDirection] =
-        useState<SortDirection>("asc");
-    const [searchText, setSearchText] = useState("");
+    const [sortDirection, setSortDirection] = useState<"asc" | "desc">(propSortDirection || "asc");
     const handleSort = (key: keyof T) => {
         if (sortKey === key) {
             setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
@@ -66,13 +63,6 @@ function DataTable<T>({
     };
     return (
         <div className={styles.wrapper}>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                className={styles.searchInput}
-            />
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -83,18 +73,17 @@ function DataTable<T>({
                                 className={styles.sortableHeader}
                             >
                                 <div className={styles.headerContent}>
-                                    {sortKey === col.key && (
-                                        <span className={styles.sortIconTop}>
-                                            {sortDirection === "asc" ? "▲" : "▼"}
-                                        </span>
-                                    )}
                                     <span>{col.label}</span>
+                                    {/* Sort icon always on the right */}
+                                    <span className={styles.sortIcon}>
+                                        {sortKey === col.key ? (sortDirection === "asc" ? "▲" : "▼") : "▲"}
+                                    </span>
                                 </div>
                             </th>
-
                         ))}
                     </tr>
                 </thead>
+
 
 
                 <tbody>
