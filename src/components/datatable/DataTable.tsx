@@ -105,7 +105,7 @@ function DataTable<T>({
                             </td>
                         </tr>
                     ) : (
-                        filteredData.map((row, index) => (
+                        filteredData.map((row) => (
                             <tr
                                 className={selectedRow === row ? styles.selectedRow : ""}
                                 onClick={() => handleRowClick(row)}
